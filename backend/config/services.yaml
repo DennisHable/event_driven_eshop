@@ -1,0 +1,16 @@
+# tento konfig. soubor řídí auto Dependency Injection
+parameters:
+
+services:
+    # výchozí nastavení pro všechny služby v této konfiguraci
+    _defaults:
+        autowire: true      # auto vložení závislosti pomocí Symfony (Symfony si při startu vytvoří instance a pak je předává, třeba do konstruktorů, atd.)
+        autoconfigure: true # auto registrace třídy jako komponenty; třeba u kontrolerů, tagování tříd pro Symfony, aby jim mohlo posílat http požadavky
+
+    # říká Symfony, kde všude má hledat třídy pro Dependency Injection kontejner (klíč název třídy; hodnota je instance třídy, Singleton); potencionální služby
+    App\:
+        resource: '../src/'
+        exclude: # vynechává entity, konfigy apod... nemají povahu služeb a symfony by je vytvářet nemělo (třeba entity vytvoří až service vrstva; nebo se načtou z db přes ORM)
+            - '../src/DependencyInjection/'
+            - '../src/Entity/'
+            - '../src/Kernel.php'

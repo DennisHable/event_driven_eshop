@@ -1,0 +1,9 @@
+framework: # asynchonní fronty; "těžké" (tady moc ne) operace se neprování při HTTP požadavku klienta
+    messenger:
+        transports:
+            # asynchronní fronta (název 'async'), která ukládá zprávy do DB "MESSENGER_TRANSPORT_DSN=doctrine://default?auto_setup=true"; v DB se (sama) vytvoří nová tabulka
+            async: '%env(MESSENGER_TRANSPORT_DSN)%'
+
+        routing:
+            # Kdykoliv se někde v kódu vytvoří OrderCreatedMessage, pošle se  do fronty 'async', to se pak zpracuje napozadí pomocí workeru
+            'App\Message\OrderCreatedMessage': async

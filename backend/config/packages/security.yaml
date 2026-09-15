@@ -1,0 +1,43 @@
+security: # zabezpečení appky
+    # jaký algo se použije na hashování hesel pro db
+    password_hashers:
+        Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto' # auto = nejbezpečnější dostupný algo v PHP
+
+    # zdroj uživatelů (UserProvider) podle username - když někdo pošle session cookie nebo se chce přihlásit, tak v jaké tabulce se bude hledat v db (jaká to bude třída)
+    providers:
+        app_user_provider:
+            entity:
+                class: App\Entity\User # kde je hledat; třída, která se bere jako ten uživatel
+                property: username # podle čeho je identifikovat
+
+    # bezpečnostní brány
+    firewalls:
+        dev: # vypnutí pro dev nástroje (profiler, ...), kvůli rychlosti
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        main:
+            lazy: true # uživ. se načte až bude appko vyžadován
+            provider: app_user_provider
+
+            # hlídá cestu /api/login - React tam pošle JSON s username a password
+            json_login:
+                check_path: /api/login
+                username_path: username # názvy co to očekává v JSONu
+                password_path: password
+
+            # odhlášení - vymaže session
+            logout:
+                path: /api/logout
+                target: api_logout_success # + přesměrování, když úspěšně odhlásí
+
+    # přístupová práva
+    access_control: # od shora dolů - nahoře míň restiktivní dole více restiktivní
+        - { path: ^/api/products, roles: PUBLIC_ACCESS } # dostupné komukoliv
+        - { path: ^/api/register, roles: PUBLIC_ACCESS }
+        - { path: ^/api/logout-success, roles: PUBLIC_ACCESS }
+        - { path: ^/api/login, roles: PUBLIC_ACCESS }
+        - { path: ^/api/logout, roles: PUBLIC_ACCESS }
+        - { path: ^/api/me, roles: PUBLIC_ACCESS }
+        - { path: ^/api/products/max-price, roles: PUBLIC_ACCESS }
+        - { path: ^/api, roles: [ROLE_USER, ROLE_ADMIN] } # pouze uživ. s rolí ROLE_ADMIN nebo ROLE_ADMIN
