@@ -1,0 +1,11 @@
+FROM php:8.4-fpm-alpine
+
+# instalace sys knihoven potřebných pro PostgreSQL driver
+RUN apk add --no-cache postgresql-dev
+
+# oficiální Docker skript pro instalaci PHP rozšíření
+# + instalace BCMath rozšíření
+RUN docker-php-ext-install pdo pdo_pgsql bcmath
+
+# zkopírujeme připravený nezávislý Composer (stáhne se z Docker Hubu) přímo do systému; spustí ho vytáhne složku a kontejner zahodí
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
