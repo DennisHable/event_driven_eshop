@@ -58,7 +58,7 @@ The frontend communicates with the Symfony backend through a structured, status-
 ---
 
 ## Quick Start (Local Development)
-You can use a script `run.sh` in the root directory of the project.
+You can use the automated `run.sh` script in the root directory of the project.
 
 First, grant execution permissions to the script:
 ```bash
