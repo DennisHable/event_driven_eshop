@@ -9,5 +9,8 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class AdminService {
 
+    public function __construct(private readonly EntityManagerInterface $entityManager) {}
+
+
 
 }
