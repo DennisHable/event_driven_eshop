@@ -11,6 +11,7 @@ Application is fully containerized via Docker.
 
 ![Application Preview](eshop_main_page.png) *(Main page example)*
 
+
 ---
 
 ## Core Architecture & Tech Stack
