@@ -75,6 +75,26 @@ export default function ProductDetailPage() {
                 <span>Zpět do katalogu</span>
             </button>
 
+
+            {/* panel jen pro admina */}
+            {user && user.roles.includes('ROLE_ADMIN') && (
+                <div className="flex items-center space-x-3 bg-zinc-900/60 border border-zinc-800 px-4 py-2 rounded-xl">
+                    <span className="text-[10px] text-zinc-500 font-bold uppercase tracking-wider mr-2 border-r border-zinc-800 pr-3">Admin akce</span>
+                    <Link
+                        to={`/admin/product/edit/${product.id}`} // jen redirect na stránku pro editaci
+                        className="flex items-center space-x-1 text-xs text-amber-400 hover:text-amber-300 font-medium transition-colors"
+                    >
+                        <Edit size={14} /><span>Upravit texty/cenu</span>
+                    </Link>
+                    <button
+                        onClick={handleDelete} // volání funkce pro smazání z DB
+                        className="flex items-center space-x-1 text-xs text-rose-400 hover:text-rose-300 font-medium transition-colors cursor-pointer ml-2"
+                    >
+                        <Trash2 size={14} /><span>Smazat z e-shopu</span>
+                    </button>
+                </div>
+            )}
+
             {/* hlavní blok detailu */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 bg-zinc-900/20 border border-zinc-800/60 rounded-2xl p-6 md:p-8 shadow-2xl">
 
