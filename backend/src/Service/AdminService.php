@@ -72,4 +72,22 @@ class AdminService {
     }
 
 
+    public function deleteProduct(int $id, ?User $user): array {
+        if(!$user || !in_array('ROLE_ADMIN', $user->getRoles(), true)) {
+            return ['success' => false, 'error' => 'Editaci produktu může provádět jen přihlášený ADMIN.', 'code' => 400];
+        }
+
+        $product = $this->entityManager->getRepository(Product::class)->find($id);
+
+        if (!$product) {
+            return ['success' => false, 'error' => 'Produkt neexistuje.', 'code' => 404];
+        }
+
+        // odstranění objekt z paměti a flush() provede SQL dotaz "DELETE FROM products WHERE id = X"
+        $this->entityManager->remove($product);
+        $this->entityManager->flush();
+
+        return ['success' => true, 'productId' => $product->getId(), 'code' => 200];
+    }
+
 }
