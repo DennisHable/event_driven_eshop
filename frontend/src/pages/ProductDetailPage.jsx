@@ -29,6 +29,19 @@ export default function ProductDetailPage() {
     }, [id]); // při změně id prodkutu
 
 
+    const handleDelete = () => { // smazání produktu ADMINEM z DB
+        if (window.confirm(`Opravdu chcete produkt "${product.name}" definitivně smazat z katalogu?`)) {
+            fetch(`/api/admin/product/delete/${product.id}`, {
+                method: 'DELETE'
+            })
+                .then(res => {
+                    if (!res.ok) throw new Error('Smazání selhalo');
+                    navigate('/'); // po smazání redirect na hlavní stranu
+                })
+                .catch(err => alert(err.message));
+        }
+    };
+
     if (loading) {
         return (
             <div className="animate-pulse space-y-8 max-w-5xl mx-auto pt-4">
