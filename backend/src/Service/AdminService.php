@@ -37,6 +37,39 @@ class AdminService {
         return ['success' => true, 'productId' => $product->getId(), 'code' => 201];
     }
 
+    public function editProduct(array $data, int $id, ?User $user): array {
+        if(!$user || !in_array('ROLE_ADMIN', $user->getRoles(), true)) {
+            return ['success' => false, 'error' => 'Editaci produktu může provádět jen přihlášený ADMIN.', 'code' => 400];
+        }
+
+        $product = $this->entityManager->getRepository(Product::class)->find($id); // najít produkt dle id v tabulce přísušející třídě Product
+        if (!$product) {
+            return ['success' => false, 'error' => 'Produkt neexistuje.', 'code' => 404];
+        }
+
+        if(isset($data['name'])) {
+            $product->setName($data['name']);
+        }
+
+        if(isset($data['price'])) {
+            $product->setPrice($data['price']);
+        }
+
+        if(isset($data['stock'])) {
+            $product->setStock($data['stock']);
+        }
+
+        if(isset($data['category'])) {
+            $product->setCategory($data['category']);
+        }
+
+        if(isset($data['description'])) {
+            $product->setDescription($data['description']);
+        }
+
+        $this->entityManager->flush();
+        return ['success' => true, 'productId' => $product->getId(), 'code' => 200];
+    }
 
 
 }
