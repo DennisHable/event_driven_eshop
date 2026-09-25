@@ -9,6 +9,7 @@ import ProfilePage from './pages/ProfilePage';
 import AuthPage from './pages/AuthPage';
 import AuthProvider from "./context/AuthContext";
 import PaymentPage from './pages/PaymentPage';
+import AdminProductFormPage from './pages/AdminProductFormPage';
 
 export default function App() {
     return ( // závoky kvůli strukturování JSX; Vite vezme JSX a přeloží (transpilace) ho do JS (React/Prohlížeč ty funkce zavolá, postaví v RAM Virutal DOM; pomocí nativních metod prohlížeče vygeneruje HTML - při rerenderu úprava jen toho co se změnilo)
@@ -25,6 +26,8 @@ export default function App() {
                                 <Route path="/cart" element={<CartPage/>}/>
                                 <Route path="/profile" element={<ProfilePage/>}/>
                                 <Route path="/payment/:orderId" element={<PaymentPage />} />
+                                <Route path="/admin/product/new" element={<AdminProductFormPage />} />
+                                <Route path="/admin/product/edit/:id" element={<AdminProductFormPage />} />
                             </Routes>
                         </main>
                     </div>
