@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import {ArrowLeft, ShoppingCart, CheckCircle, XCircle, Minus, Plus} from 'lucide-react';
+import {ArrowLeft, ShoppingCart, CheckCircle, XCircle, Minus, Plus, Edit, Trash2} from 'lucide-react';
 import { useCart } from '../context/CartContext';
+import {useAuth} from "../context/AuthContext.jsx";
 export default function ProductDetailPage() {
     const { id } = useParams(); // vytáhne id produktu z URL (např.: z /product/15 vytáhne "15")
     const navigate = useNavigate(); // hook pro přesměrování
+
+    const {user} = useAuth();
 
     const [product, setProduct] = useState(null); // načtený produkt
     const [loading, setLoading] = useState(true); // načítačí kolečko
