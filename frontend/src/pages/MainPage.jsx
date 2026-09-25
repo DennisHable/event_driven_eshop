@@ -79,7 +79,7 @@ export default function MainPage() {
 
 
     return (
-        <div className="space-y-6">
+        <div className="space-y-6 ">
             {/* horní vyhledávací lišta */}
             <div className="flex flex-col sm:flex-row gap-4 items-center justify-between bg-zinc-900/40 p-4 border border-zinc-800/60 rounded-xl">
                 <div className="relative w-full sm:max-w-md">
@@ -194,8 +194,8 @@ export default function MainPage() {
 
                 {/* mobilní filtry */}
                 {isMobileFilterOpen && (
-                    <div className="fixed inset-0 z-50 lg:hidden flex">
-                        <div className="fixed inset-0 bg-black/70 backdrop-blur-sm" onClick={() => setIsMobileFilterOpen(false)} />
+                    <div className="fixed inset-0 z-50 lg:hidden flex ">
+                        <div className=" fixed inset-0 bg-black/70 backdrop-blur-sm" onClick={() => setIsMobileFilterOpen(false)} />
                         <div className="relative ml-0 mr-auto flex h-full w-full max-w-xs flex-col bg-zinc-900 p-6 shadow-xl border-r border-zinc-800">
                             <div className="flex items-center justify-between mb-6">
                 <span className="text-white font-bold text-base flex items-center space-x-2">
@@ -207,7 +207,7 @@ export default function MainPage() {
                                 </button>
                             </div>
 
-                            <div className="space-y-6">
+                            <div className="space-y-6 overflow-y-auto max-h-[calc(100vh-120px)] pr-2">
                                 <div>
                                     <h3 className="text-sm font-semibold text-zinc-400 uppercase tracking-wider mb-3">Kategorie</h3>
                                     <div className="space-y-2">
