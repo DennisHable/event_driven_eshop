@@ -49,4 +49,17 @@ class AdminProductController extends AbstractController {
     }
 
 
+    #[Route('/api/admin/product/delete/{id}', name: 'api_admin_product_delete', methods: ['DELETE'])]
+    public function delete(int $id): JsonResponse {
+        /** @var User|null $user */
+        $user = $this->getUser();
+
+        $result = $this->adminService->deleteProduct($id, $user);
+
+        if (!$result['success']) {
+            return new JsonResponse(['error' => $result['error']], $result['code']);
+        }
+
+        return new JsonResponse(['success' => 'Produkt byl úspěšně smazán z katalogu']);
+    }
 }
