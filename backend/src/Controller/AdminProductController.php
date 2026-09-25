@@ -13,4 +13,23 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class AdminProductController extends AbstractController {
 
+    public function __construct(private readonly AdminService $adminService) {}
+
+    #[Route('/api/admin/product/add', name: 'admin_product_add', methods: ['POST'])]
+    public function addNewProduct(Request $request): JsonResponse {
+        /** @var User|null $user */
+        $user = $this->getUser(); // vrací objekt aktuálně přihlášeného uživatele (server najde session na serveru dle PHPSESSID a najde v ní security token uživatele); pokud není přiglášen => null; metoda je z AbstractController
+
+        $data = json_decode($request->getContent(), true);
+
+        $result = $this->adminService->addNewProduct($data ?? [], $user);
+
+        if (!$result['success']) {
+            return new JsonResponse(['error' => $result['error']], $result['code']);
+        }
+
+        return new JsonResponse(['success' => 'Produkt byl úspěšně přidán.'], $result['code']);
+    }
+
+
 }
