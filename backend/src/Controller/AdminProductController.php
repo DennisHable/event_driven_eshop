@@ -32,4 +32,21 @@ class AdminProductController extends AbstractController {
     }
 
 
+    #[Route('/api/admin/product/edit/{id}', name: 'admin_product_edit', methods: ['PUT'])] # PUT = více zavolání nic dále nezmění (lze zavolat vícekrát a efekt bude jako kdyby se to volalo jen jednou) narozdíl od POST, kde se dle specifikace očekává přidávání
+    public function editProduct(Request $request, int $id): JsonResponse {
+        /** @var User|null $user */
+        $user = $this->getUser();
+
+        $data = json_decode($request->getContent(), true);
+
+        $result = $this->adminService->editProduct($data, $id, $user);
+
+        if (!$result['success']) {
+            return new JsonResponse(['error' => $result['error']], $result['code']);
+        }
+
+        return new JsonResponse(['success' => 'Produkt byl úspěšně upraven.'], $result['code']);
+    }
+
+
 }
