@@ -37,7 +37,7 @@ export default function Navbar() {
                     {user ? (
                         <>
                             {/* pokud je uživatel ADMIN, zobrazíme mu tlačítko pro přidání nového zboží */}
-                            {user.roles.includes('ROLE_ADMIN') && (
+                            {user && user.roles.includes('ROLE_ADMIN') && (
                                 <Link to="/admin/product/new" className="bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer">
                                     <span className="text-sm font-semibold">+ Přidat produkt</span>
                                 </Link>
